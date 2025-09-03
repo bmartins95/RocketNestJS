@@ -23,8 +23,9 @@
     "noFallthroughCasesInSwitch": false,
   },
   "include": [
-    "src/**/*",
-    "test/**/*"
+    "src",
+    "test",
+    "prisma"
   ],
   "exclude": [
     "node_modules",
