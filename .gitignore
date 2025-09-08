@@ -4,6 +4,7 @@
 /build
 /data
 tsconfig.build.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # Logs
 logs
