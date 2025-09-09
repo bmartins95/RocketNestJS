@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { Test } from "@nestjs/testing";
+import { hash } from "bcryptjs";
 import request from "supertest";
 
 import { AppModule } from "@/app.module";
@@ -8,7 +9,7 @@ import { PrismaService } from "@/prisma/prisma.service";
 import type { INestApplication } from "@nestjs/common";
 import type { Server } from "node:http";
 
-describe("Create account (E2E)", () => {
+describe("Authenticate user (E2E)", () => {
     let app: INestApplication<Server>;
     let prisma: PrismaService;
 
@@ -21,21 +22,26 @@ describe("Create account (E2E)", () => {
         await app.init();
     });
 
-    test("[POST] /accounts", async () => {
+    test("[POST] /sessions", async () => {
         const server: Server = app.getHttpServer();
-        const response = await request(server).post("/accounts").send({
-            name: "John Doe",
+
+        await prisma.user.create({
+            data: {
+                name: "John Doe",
+                email: "john.doe@example.com",
+                password: await hash("securePassword123", 10),
+            },
+        });
+
+        const response = await request(server).post("/sessions").send({
             email: "john.doe@example.com",
             password: "securePassword123",
         });
         expect(response.status).toBe(201);
-
-        const account = await prisma.user.findUnique({
-            where: { email: "john.doe@example.com" },
-        });
-        expect(account).toBeDefined();
-        expect(account?.name).toBe("John Doe");
-        expect(account?.email).toBe("john.doe@example.com");
-        expect(account?.password).not.toBe("securePassword123");
+        expect(response.body).toEqual(
+            expect.objectContaining({
+                access_token: expect.any(String),
+            }),
+        );
     });
 });
