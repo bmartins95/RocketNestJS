@@ -7,9 +7,10 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
     test: {
         include: ['test/*.e2e.test.ts'],
+        setupFiles: ['./test/setup.e2e.ts'],
+        environment: 'node',
         globals: true,
         root: './',
-        setupFiles: ['./test/setup.e2e.ts'],
     },
     plugins: [
         tsConfigPaths(),

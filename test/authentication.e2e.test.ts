@@ -3,11 +3,12 @@ import { Test } from "@nestjs/testing";
 import { hash } from "bcryptjs";
 import request from "supertest";
 
-import { AppModule } from "@/app.module";
-import { PrismaService } from "@/prisma/prisma.service";
+import { AppModule } from "src/infra/app.module";
+import { PrismaService } from "src/infra/prisma/prisma.service";
 
 import type { INestApplication } from "@nestjs/common";
 import type { Server } from "node:http";
+
 
 describe("Authenticate user (E2E)", () => {
     let app: INestApplication<Server>;
@@ -38,8 +39,6 @@ describe("Authenticate user (E2E)", () => {
             password: "securePassword123",
         });
         expect(response.status).toBe(201);
-        expect(response.body).toEqual(
-            expect(typeof response.body.access_token).toBe('string'),
-        );
+        expect(typeof response.body.access_token).toBe('string')
     });
 });
