@@ -4,7 +4,8 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import z from "zod";
 
-import type { Env } from "@/env";
+import { Env } from "../env";
+
 
 
 const tokenSchema = z.object({
