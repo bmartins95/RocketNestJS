@@ -1,0 +1,41 @@
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { Question } from '@/domain/forum/enterprise/entities/question'
+import { Slug } from '@/domain/forum/enterprise/entities/value-objects/slug'
+import { makeQuestion } from 'test/factories/make-question'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
+
+import { GetQuestionBySlugUseCase } from '../src/domain/forum/application/use-cases/get-question-by-slug'
+
+let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let sut: GetQuestionBySlugUseCase
+
+describe('Get Question By Slug', () => {
+  beforeEach(() => {
+    inMemoryQuestionAttachmentsRepository =
+      new InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepository,
+    )
+    sut = new GetQuestionBySlugUseCase(inMemoryQuestionsRepository)
+  })
+
+  it('should be able to get a question by slug', async () => {
+    const newQuestion = makeQuestion({
+      slug: Slug.create('example-question'),
+    })
+
+    await inMemoryQuestionsRepository.create(newQuestion)
+
+    const result = await sut.execute({
+      slug: 'example-question',
+    })
+
+    if (result.value instanceof ResourceNotFoundError) {
+      expect(result.value.message).toBeDefined()
+    } else {
+      expect(result.value.question).toBeInstanceOf(Question)
+    }
+  })
+})

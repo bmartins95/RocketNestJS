@@ -39,9 +39,7 @@ describe("Authenticate user (E2E)", () => {
         });
         expect(response.status).toBe(201);
         expect(response.body).toEqual(
-            expect.objectContaining({
-                access_token: expect.any(String),
-            }),
+            expect(typeof response.body.access_token).toBe('string'),
         );
     });
 });
