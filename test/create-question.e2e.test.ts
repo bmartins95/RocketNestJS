@@ -5,7 +5,7 @@ import { hash } from "bcryptjs";
 import request from "supertest";
 
 import { AppModule } from "src/infra/app.module";
-import { PrismaService } from "src/infra/prisma/prisma.service";
+import { PrismaService } from "@/infra/database/prisma/prisma.service";
 
 import type { INestApplication } from "@nestjs/common";
 import type { Server } from "node:http";
