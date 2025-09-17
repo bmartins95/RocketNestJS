@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
+
 import { right } from '@/core/either'
 
 import type { QuestionsRepository } from '../repositories/questions-repository'
-import type { Either} from '@/core/either';
+import type { Either } from '@/core/either';
 import type { Question } from '@/domain/forum/enterprise/entities/question'
 
 interface FetchRecentQuestionsUseCaseRequest {
@@ -15,8 +17,9 @@ type FetchRecentQuestionsUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FetchRecentQuestionsUseCase {
-  constructor(private questionsRepository: QuestionsRepository) {}
+  constructor(private questionsRepository: QuestionsRepository) { }
 
   async execute({
     page,
