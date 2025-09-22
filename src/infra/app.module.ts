@@ -11,7 +11,7 @@ import { BcryptHasher } from './cryptography/bcrypt-hasher';
 import { JwtEncrypter } from './cryptography/jwt-encrypter';
 import { DatabaseModule } from './database/database-module';
 import { envSchema } from './env';
-import { AuthenticationController } from './http/controllers/authentication';
+import { AuthenticationController } from './http/controllers/authenticate';
 import { CreateAccountController } from './http/controllers/create-account';
 import { CreateQuestionController } from './http/controllers/create-question';
 import { FetchRecentQuestionsController } from './http/controllers/fetch-recent-questions';

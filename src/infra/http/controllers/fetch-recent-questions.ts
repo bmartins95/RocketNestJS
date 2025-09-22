@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from "@nestjs/common";
+import { BadRequestException, Controller, Get, Query, UseGuards } from "@nestjs/common";
 import z from "zod";
 
 import { FetchRecentQuestionsUseCase } from "@/domain/forum/application/use-cases/fetch-recent-questions";
@@ -22,8 +22,13 @@ export class FetchRecentQuestionsController {
 
     @Get()
     async handle(@Query('page', queryValidationPipe) page: PageQueryParam) {
-        console.log({ page });
-        const questions = await this.service.execute({ page });
-        return { questions };
+        const result = await this.service.execute({ page });
+
+        if (result.isLeft()) {
+            throw new BadRequestException();
+        }
+
+
+        return { result };
     }
 }
