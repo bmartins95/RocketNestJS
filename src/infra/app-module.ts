@@ -6,7 +6,7 @@ import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/crea
 import { FetchRecentQuestionsUseCase } from '@/domain/forum/application/use-cases/fetch-recent-questions';
 import { RegisterStudentUseCase } from '@/domain/forum/application/use-cases/register-student';
 
-import { AuthModule } from './auth/auth';
+import { AuthModule } from './auth/auth-module';
 import { BcryptHasher } from './cryptography/bcrypt-hasher';
 import { JwtEncrypter } from './cryptography/jwt-encrypter';
 import { DatabaseModule } from './database/database-module';

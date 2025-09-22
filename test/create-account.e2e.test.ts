@@ -2,7 +2,7 @@
 import { Test } from "@nestjs/testing";
 import request from "supertest";
 
-import { AppModule } from "@/infra/app.module";
+import { AppModule } from "@/infra/app-module";
 import { PrismaService } from "@/infra/database/prisma/prisma.service";
 
 import type { INestApplication } from "@nestjs/common";

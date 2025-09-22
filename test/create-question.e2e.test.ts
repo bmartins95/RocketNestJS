@@ -4,7 +4,7 @@ import { Test } from "@nestjs/testing";
 import { hash } from "bcryptjs";
 import request from "supertest";
 
-import { AppModule } from "src/infra/app.module";
+import { AppModule } from "@/infra/app-module";
 import { PrismaService } from "@/infra/database/prisma/prisma.service";
 
 import type { INestApplication } from "@nestjs/common";
